@@ -47,7 +47,7 @@ export default function MainTabNavigator() {
         name="HomeTab"
         component={HomeStackNavigator}
         options={{
-          title: "Dashboard",
+          title: "대시보드",
           tabBarIcon: ({ color, size }) => (
             <Feather name="bar-chart-2" size={size} color={color} />
           ),
@@ -57,7 +57,7 @@ export default function MainTabNavigator() {
         name="ProfileTab"
         component={ProfileStackNavigator}
         options={{
-          title: "Settings",
+          title: "설정",
           tabBarIcon: ({ color, size }) => (
             <Feather name="settings" size={size} color={color} />
           ),

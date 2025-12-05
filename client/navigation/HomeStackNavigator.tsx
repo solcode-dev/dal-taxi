@@ -19,7 +19,7 @@ export default function HomeStackNavigator() {
         name="Dashboard"
         component={DashboardScreen}
         options={{
-          headerTitle: () => <HeaderTitle title="Dashboard" />,
+          headerTitle: () => <HeaderTitle title="대시보드" />,
         }}
       />
     </Stack.Navigator>

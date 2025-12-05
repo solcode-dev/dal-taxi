@@ -69,7 +69,7 @@ export function RevenueCard({ revenue, netChange, periodLabel }: RevenueCardProp
         type="caption"
         style={[styles.label, { color: theme.textSecondary }]}
       >
-        Total Revenue
+        총 수입
       </ThemedText>
       
       <Animated.View style={animatedStyle}>
@@ -98,7 +98,7 @@ export function RevenueCard({ revenue, netChange, periodLabel }: RevenueCardProp
           type="small"
           style={[styles.periodText, { color: theme.textSecondary }]}
         >
-          vs previous period
+          전 기간 대비
         </ThemedText>
       </Animated.View>
     </View>

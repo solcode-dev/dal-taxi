@@ -20,9 +20,9 @@ interface PeriodFilterProps {
 }
 
 const periods: { key: PeriodType; label: string }[] = [
-  { key: "daily", label: "Daily" },
-  { key: "weekly", label: "Weekly" },
-  { key: "monthly", label: "Monthly" },
+  { key: "daily", label: "일간" },
+  { key: "weekly", label: "주간" },
+  { key: "monthly", label: "월간" },
 ];
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);

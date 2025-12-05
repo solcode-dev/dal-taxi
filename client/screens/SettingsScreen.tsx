@@ -87,50 +87,50 @@ export default function SettingsScreen() {
       ]}
       scrollIndicatorInsets={{ bottom: insets.bottom }}
     >
-      <SettingsSection title="PREFERENCES">
+      <SettingsSection title="설정">
         <SettingsItem
           icon="target"
-          title="Monthly Goal"
-          subtitle="Set your revenue target"
+          title="월간 목표"
+          subtitle="수입 목표 금액 설정"
         />
         <View style={[styles.divider, { backgroundColor: theme.backgroundSecondary }]} />
         <SettingsItem
           icon="dollar-sign"
-          title="Currency"
-          subtitle="KRW (Korean Won)"
+          title="통화"
+          subtitle="KRW (한국 원)"
         />
         <View style={[styles.divider, { backgroundColor: theme.backgroundSecondary }]} />
         <SettingsItem
           icon="moon"
-          title="Appearance"
-          subtitle="System default"
+          title="테마"
+          subtitle="시스템 기본값"
         />
       </SettingsSection>
 
-      <SettingsSection title="DATA">
+      <SettingsSection title="데이터">
         <SettingsItem
           icon="download"
-          title="Export Data"
-          subtitle="Download your revenue history"
+          title="데이터 내보내기"
+          subtitle="수입 내역 다운로드"
         />
         <View style={[styles.divider, { backgroundColor: theme.backgroundSecondary }]} />
         <SettingsItem
           icon="refresh-cw"
-          title="Sync"
-          subtitle="Last synced: Just now"
+          title="동기화"
+          subtitle="마지막 동기화: 방금 전"
         />
       </SettingsSection>
 
-      <SettingsSection title="ABOUT">
+      <SettingsSection title="정보">
         <SettingsItem
           icon="info"
-          title="App Version"
+          title="앱 버전"
           subtitle="1.0.0"
         />
         <View style={[styles.divider, { backgroundColor: theme.backgroundSecondary }]} />
         <SettingsItem
           icon="help-circle"
-          title="Help & Support"
+          title="도움말 및 지원"
         />
       </SettingsSection>
     </KeyboardAwareScrollViewCompat>

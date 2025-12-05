@@ -61,7 +61,7 @@ export function CircularProgress({ progress, currentAmount, goalAmount }: Circul
   return (
     <View style={[styles.container, { backgroundColor: theme.backgroundDefault }]}>
       <ThemedText type="h4" style={styles.title}>
-        Monthly Goal Progress
+        월간 목표 달성률
       </ThemedText>
 
       <View
