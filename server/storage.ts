@@ -1,4 +1,4 @@
-import { users, transactions, type User, type InsertUser, type Transaction, type InsertTransaction } from "@shared/schema";
+import { users, transactions, financialGoals, type User, type InsertUser, type Transaction, type InsertTransaction, type FinancialGoal, type InsertFinancialGoal } from "@shared/schema";
 import { db } from "./db";
 import { eq, gte, lte, and, desc } from "drizzle-orm";
 
@@ -11,6 +11,10 @@ export interface IStorage {
   getTransactionById(id: string): Promise<Transaction | undefined>;
   createTransaction(transaction: InsertTransaction): Promise<Transaction>;
   deleteTransaction(id: string): Promise<boolean>;
+  
+  getFinancialGoal(year: number, month: number): Promise<FinancialGoal | undefined>;
+  getFinancialGoals(): Promise<FinancialGoal[]>;
+  upsertFinancialGoal(goal: InsertFinancialGoal): Promise<FinancialGoal>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -75,6 +79,41 @@ export class DatabaseStorage implements IStorage {
       .where(eq(transactions.id, id))
       .returning();
     return result.length > 0;
+  }
+
+  async getFinancialGoal(year: number, month: number): Promise<FinancialGoal | undefined> {
+    const [goal] = await db.select()
+      .from(financialGoals)
+      .where(and(
+        eq(financialGoals.year, year),
+        eq(financialGoals.month, month)
+      ));
+    return goal || undefined;
+  }
+
+  async getFinancialGoals(): Promise<FinancialGoal[]> {
+    return db.select()
+      .from(financialGoals)
+      .orderBy(desc(financialGoals.year), desc(financialGoals.month));
+  }
+
+  async upsertFinancialGoal(goal: InsertFinancialGoal): Promise<FinancialGoal> {
+    const existing = await this.getFinancialGoal(goal.year, goal.month);
+    
+    if (existing) {
+      const [updated] = await db
+        .update(financialGoals)
+        .set({ amount: goal.amount })
+        .where(eq(financialGoals.id, existing.id))
+        .returning();
+      return updated;
+    }
+    
+    const [created] = await db
+      .insert(financialGoals)
+      .values(goal)
+      .returning();
+    return created;
   }
 }
 

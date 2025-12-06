@@ -41,3 +41,21 @@ export const selectTransactionSchema = createSelectSchema(transactions);
 export type InsertTransaction = z.infer<typeof insertTransactionSchema>;
 export type Transaction = typeof transactions.$inferSelect;
 export type TransactionType = "income" | "expense";
+
+export const financialGoals = pgTable("financial_goals", {
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  year: integer("year").notNull(),
+  month: integer("month").notNull(),
+  amount: integer("amount").notNull(),
+});
+
+export const insertFinancialGoalSchema = createInsertSchema(financialGoals).omit({
+  id: true,
+});
+
+export const selectFinancialGoalSchema = createSelectSchema(financialGoals);
+
+export type InsertFinancialGoal = z.infer<typeof insertFinancialGoalSchema>;
+export type FinancialGoal = typeof financialGoals.$inferSelect;

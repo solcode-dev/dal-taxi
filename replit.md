@@ -77,6 +77,16 @@ client/
 | type | enum ('income', 'expense') | 거래 유형 (수입/지출) |
 | amount | integer | 거래 금액 (원) |
 
+### financial_goals 테이블
+월간 재무 목표 금액을 저장하는 테이블입니다.
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| id | varchar (UUID) | 고유 식별자 |
+| year | integer | 목표 설정 연도 |
+| month | integer | 목표 설정 월 (1-12) |
+| amount | integer | 목표 금액 (원) |
+
 ## API Endpoints
 
 ### 거래 기록 (Transactions)
@@ -84,6 +94,11 @@ client/
 - `GET /api/transactions/:id` - 특정 거래 조회
 - `POST /api/transactions` - 새 거래 생성
 - `DELETE /api/transactions/:id` - 거래 삭제
+
+### 재무 목표 (Financial Goals)
+- `GET /api/goals` - 모든 목표 조회
+- `GET /api/goals/:year/:month` - 특정 월 목표 조회
+- `POST /api/goals` - 목표 생성/수정 (동일 년월 존재 시 업데이트)
 
 ### 수익 요약 (Revenue Summary)
 - `GET /api/revenue/summary?period=daily|weekly|monthly` - 기간별 수익 요약

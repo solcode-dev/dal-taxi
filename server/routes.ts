@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "node:http";
 import { storage } from "./storage";
-import { insertTransactionSchema } from "@shared/schema";
+import { insertTransactionSchema, insertFinancialGoalSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/transactions", async (req, res) => {
@@ -53,6 +53,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(204).send();
     } catch (error) {
       res.status(500).json({ error: "Failed to delete transaction" });
+    }
+  });
+
+  app.get("/api/goals", async (req, res) => {
+    try {
+      const goals = await storage.getFinancialGoals();
+      res.json(goals);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch goals" });
+    }
+  });
+
+  app.get("/api/goals/:year/:month", async (req, res) => {
+    try {
+      const year = parseInt(req.params.year);
+      const month = parseInt(req.params.month);
+      
+      if (isNaN(year) || isNaN(month) || month < 1 || month > 12) {
+        return res.status(400).json({ error: "Invalid year or month" });
+      }
+      
+      const goal = await storage.getFinancialGoal(year, month);
+      if (!goal) {
+        return res.status(404).json({ error: "Goal not found" });
+      }
+      res.json(goal);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch goal" });
+    }
+  });
+
+  app.post("/api/goals", async (req, res) => {
+    try {
+      const parsed = insertFinancialGoalSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ error: parsed.error.errors });
+      }
+      
+      if (parsed.data.month < 1 || parsed.data.month > 12) {
+        return res.status(400).json({ error: "Month must be between 1 and 12" });
+      }
+      
+      const goal = await storage.upsertFinancialGoal(parsed.data);
+      res.status(201).json(goal);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to save goal" });
     }
   });
 
