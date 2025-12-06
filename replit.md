@@ -101,18 +101,13 @@ client/
 - `POST /api/goals` - 목표 생성/수정 (동일 년월 존재 시 업데이트)
 
 ### 수익 요약 (Revenue Summary)
-- `GET /api/revenue/summary?period=daily|weekly|monthly` - 기간별 수익 요약
+- `GET /api/revenue/summary/:period` - 기간별 수익 요약 (period: daily, weekly, monthly)
 
-## Mock Data (UI 테스트용)
-```javascript
-daily_revenue = 50,000 KRW
-weekly_revenue = 350,000 KRW
-monthly_revenue = 1,500,000 KRW
-monthly_goal = 2,000,000 KRW
-daily_net_change = +10,000
-weekly_net_change = -50,000
-monthly_net_change = +150,000
-```
+## 데이터베이스 연동
+대시보드가 실시간으로 데이터베이스에서 데이터를 조회합니다:
+- 기간별 수익 요약: transactions 테이블에서 계산
+- 월간 목표: financial_goals 테이블에서 조회
+- 목표 달성률: (월간 수익 / 목표 금액) * 100
 
 ## Design System
 - **Primary Color**: #2196F3 (Material Blue)

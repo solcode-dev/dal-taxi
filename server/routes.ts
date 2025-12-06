@@ -102,9 +102,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/revenue/summary", async (req, res) => {
+  app.get("/api/revenue/summary/:period", async (req, res) => {
     try {
-      const { period } = req.query;
+      const { period } = req.params;
       const now = new Date();
       let startDate: Date;
       let previousStartDate: Date;
