@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import Svg, { Circle } from "react-native-svg";
 import Animated, {
   useSharedValue,
@@ -16,6 +17,7 @@ interface CircularProgressProps {
   progress: number;
   currentAmount: number;
   goalAmount: number;
+  onPress?: () => void;
 }
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -34,7 +36,7 @@ function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
-export function CircularProgress({ progress, currentAmount, goalAmount }: CircularProgressProps) {
+export function CircularProgress({ progress, currentAmount, goalAmount, onPress }: CircularProgressProps) {
   const { theme } = useTheme();
   const animatedProgress = useSharedValue(0);
 
@@ -60,9 +62,16 @@ export function CircularProgress({ progress, currentAmount, goalAmount }: Circul
 
   return (
     <View style={[styles.container, { backgroundColor: theme.backgroundDefault }]}>
-      <ThemedText type="h4" style={styles.title}>
-        월간 목표 달성률
-      </ThemedText>
+      <View style={styles.titleRow}>
+        <ThemedText type="h4" style={styles.title}>
+          월간 목표 달성률
+        </ThemedText>
+        {onPress ? (
+          <Pressable onPress={onPress} hitSlop={8} style={styles.editButton}>
+            <Feather name="edit-2" size={16} color={theme.textSecondary} />
+          </Pressable>
+        ) : null}
+      </View>
 
       <View
         style={styles.progressContainer}
@@ -119,9 +128,17 @@ const styles = StyleSheet.create({
     borderRadius: BorderRadius.md,
     alignItems: "center",
   },
-  title: {
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: Spacing.xl,
+    gap: Spacing.sm,
+  },
+  title: {
     textAlign: "center",
+  },
+  editButton: {
+    padding: Spacing.xs,
   },
   progressContainer: {
     width: SIZE,
