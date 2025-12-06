@@ -1,3 +1,5 @@
+// DAO. DataStorage 클래스 정의 및 관련 함수가 있는 파일
+
 import { users, transactions, financialGoals, type User, type InsertUser, type Transaction, type InsertTransaction, type FinancialGoal, type InsertFinancialGoal } from "@shared/schema";
 import { db } from "./db";
 import { eq, gte, lte, and, desc } from "drizzle-orm";

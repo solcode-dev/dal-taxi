@@ -1,3 +1,4 @@
+import "dotenv/config"; // .env파일 로드
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
@@ -17,14 +18,12 @@ function setupCors(app: express.Application) {
   app.use((req, res, next) => {
     const origins = new Set<string>();
 
-    if (process.env.REPLIT_DEV_DOMAIN) {
-      origins.add(`https://${process.env.REPLIT_DEV_DOMAIN}`);
-    }
-
-    if (process.env.REPLIT_DOMAINS) {
-      process.env.REPLIT_DOMAINS.split(",").forEach((d) => {
-        origins.add(`https://${d.trim()}`);
-      });
+    // [변경] 모든 도메인 설정을 환경 변수 하나로 통합
+    // 필요한 모든 도메인은 .env의 ALLOWED_ORIGINS에 추가하면 됨
+    if(process.env.ALLOWED_ORIGINS) {
+      process.env.ALLOWED_ORIGINS.split(",").forEach((d) => {
+        origins.add(d.trim());
+      })
     }
 
     const origin = req.header("origin");
@@ -231,8 +230,7 @@ function setupErrorHandler(app: express.Application) {
   server.listen(
     {
       port,
-      host: "0.0.0.0",
-      reusePort: true,
+      host: process.env.HOST || "0.0.0.0",
     },
     () => {
       log(`express server serving on port ${port}`);
