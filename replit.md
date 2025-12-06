@@ -65,7 +65,30 @@ client/
     └── useScreenOptions.ts
 ```
 
-## Mock Data
+## Database Schema
+
+### transactions 테이블
+거래 기록을 저장하는 원장 테이블입니다.
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| id | varchar (UUID) | 고유 식별자 |
+| occurred_at | timestamp | 거래 발생 시각 |
+| type | enum ('income', 'expense') | 거래 유형 (수입/지출) |
+| amount | integer | 거래 금액 (원) |
+
+## API Endpoints
+
+### 거래 기록 (Transactions)
+- `GET /api/transactions` - 모든 거래 조회 (쿼리: startDate, endDate)
+- `GET /api/transactions/:id` - 특정 거래 조회
+- `POST /api/transactions` - 새 거래 생성
+- `DELETE /api/transactions/:id` - 거래 삭제
+
+### 수익 요약 (Revenue Summary)
+- `GET /api/revenue/summary?period=daily|weekly|monthly` - 기간별 수익 요약
+
+## Mock Data (UI 테스트용)
 ```javascript
 daily_revenue = 50,000 KRW
 weekly_revenue = 350,000 KRW
