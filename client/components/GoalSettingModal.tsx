@@ -54,7 +54,7 @@ export function GoalSettingModal({ visible, onClose }: GoalSettingModalProps) {
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/goals"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/goals"], refetchType: "all" });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       Alert.alert("완료", "월간 목표가 설정되었습니다.");
       onClose();

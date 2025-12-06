@@ -29,8 +29,8 @@ export function AddIncomeModal({ visible, onClose, onSuccess }: AddIncomeModalPr
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/revenue/summary"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/revenue/summary"], refetchType: "all" });
+      queryClient.invalidateQueries({ queryKey: ["/api/transactions"], refetchType: "all" });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       setAmount("");
       onSuccess();

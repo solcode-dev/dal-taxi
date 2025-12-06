@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Pressable, FlatList, Alert } from "react-native";
+import { View, StyleSheet, Pressable, FlatList, Alert, Platform } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
@@ -49,18 +49,26 @@ function TransactionItem({
 
   const handleDelete = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    Alert.alert(
-      "거래 삭제",
-      `이 ${isIncome ? "수입" : "지출"} 기록을 삭제하시겠습니까?`,
-      [
-        { text: "취소", style: "cancel" },
-        { 
-          text: "삭제", 
-          style: "destructive",
-          onPress: () => onDelete(transaction.id),
-        },
-      ]
-    );
+    
+    if (Platform.OS === "web") {
+      const confirmed = window.confirm(`이 ${isIncome ? "수입" : "지출"} 기록을 삭제하시겠습니까?`);
+      if (confirmed) {
+        onDelete(transaction.id);
+      }
+    } else {
+      Alert.alert(
+        "거래 삭제",
+        `이 ${isIncome ? "수입" : "지출"} 기록을 삭제하시겠습니까?`,
+        [
+          { text: "취소", style: "cancel" },
+          { 
+            text: "삭제", 
+            style: "destructive",
+            onPress: () => onDelete(transaction.id),
+          },
+        ]
+      );
+    }
   };
 
   return (
@@ -113,8 +121,8 @@ export function TransactionList({ onTransactionDeleted }: TransactionListProps) 
       await apiRequest("DELETE", `/api/transactions/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/transactions"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/revenue/summary"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/transactions"], refetchType: "all" });
+      queryClient.invalidateQueries({ queryKey: ["/api/revenue/summary"], refetchType: "all" });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       onTransactionDeleted?.();
     },
