@@ -68,7 +68,7 @@ function TransactionItem({
       <View style={styles.transactionLeft}>
         <View style={[
           styles.typeIcon, 
-          { backgroundColor: isIncome ? theme.success + "20" : theme.error + "20" }
+          { backgroundColor: isIncome ? theme.successLight : theme.errorLight }
         ]}>
           <Feather 
             name={isIncome ? "arrow-down-left" : "arrow-up-right"} 

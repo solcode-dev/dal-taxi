@@ -17,10 +17,13 @@ export const Colors = {
     backgroundTertiary: "#EEEEEE",
     primary: "#2196F3",
     success: "#4CAF50",
+    successLight: "rgba(76, 175, 80, 0.12)",
     error: "#F44336",
+    errorLight: "rgba(244, 67, 54, 0.12)",
     warning: "#FFC107",
     neutral: "#9E9E9E",
     progressTrack: "#E0E0E0",
+    border: "#E0E0E0",
   },
   dark: {
     text: "#ECEDEE",
@@ -35,10 +38,13 @@ export const Colors = {
     backgroundTertiary: "#3A3A3A",
     primary: "#64B5F6",
     success: "#81C784",
+    successLight: "rgba(129, 199, 132, 0.12)",
     error: "#E57373",
+    errorLight: "rgba(229, 115, 115, 0.12)",
     warning: "#FFD54F",
     neutral: "#757575",
     progressTrack: "#424242",
+    border: "#3A3A3A",
   },
 };
 
