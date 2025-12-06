@@ -4,7 +4,7 @@
 A mobile performance dashboard app built with Expo React Native that displays user revenue data with filtering capabilities and goal tracking. The app features a clean, modern Korean UI optimized for Android.
 
 ## Current State
-MVP Complete - All core dashboard features implemented with mock data.
+Full-featured dashboard with real-time database integration and interactive UI.
 
 ## Project Architecture
 
@@ -17,15 +17,19 @@ MVP Complete - All core dashboard features implemented with mock data.
 
 ### Backend (Express)
 - **Server**: Express.js on port 5000
-- **Current**: Serving static landing page (placeholder for future API)
+- **Database**: PostgreSQL with Drizzle ORM
+- **Current**: Full REST API for transactions and goals
 
 ## Screen Structure
 
 ### Dashboard Screen (대시보드)
 Main screen displaying:
-1. **Period Filter Toggle** - 일간/주간/월간 (Daily/Weekly/Monthly)
-2. **Revenue Card** - Shows total revenue with net change indicator
-3. **Circular Progress** - Monthly goal achievement gauge (75% with mock data)
+1. **Current Period Badge** - Shows current date (e.g., "2025년 12월 6일")
+2. **Period Filter Toggle** - 일간/주간/월간 (Daily/Weekly/Monthly)
+3. **Revenue Card** - Shows total revenue with net change indicator
+4. **Circular Progress** - Monthly goal achievement gauge (tap to edit)
+5. **Transaction List** - Recent transactions with delete option
+6. **Floating Action Button** - Quick add income with confetti celebration
 
 ### Settings Screen (설정)
 Configuration options:
@@ -39,26 +43,31 @@ Configuration options:
 ## File Structure
 ```
 client/
-├── App.tsx                 # Root component with providers
+├── App.tsx                   # Root component with providers
 ├── components/
-│   ├── PeriodFilter.tsx    # 3-segment toggle control
-│   ├── RevenueCard.tsx     # Revenue display with net change
-│   ├── CircularProgress.tsx # Goal progress gauge
-│   ├── Card.tsx            # Reusable card component
-│   ├── ThemedText.tsx      # Themed text component
-│   ├── ThemedView.tsx      # Themed view component
-│   ├── ErrorBoundary.tsx   # Error boundary wrapper
-│   └── ErrorFallback.tsx   # Crash recovery UI
+│   ├── PeriodFilter.tsx      # 3-segment toggle control
+│   ├── RevenueCard.tsx       # Revenue display with net change
+│   ├── CircularProgress.tsx  # Goal progress gauge with edit button
+│   ├── CurrentPeriodBadge.tsx # Date display badge
+│   ├── FloatingActionButton.tsx # FAB for adding income
+│   ├── AddIncomeModal.tsx    # Income entry modal
+│   ├── GoalSettingModal.tsx  # Goal configuration modal
+│   ├── TransactionList.tsx   # Recent transactions display
+│   ├── ConfettiAnimation.tsx # Celebration animation
+│   ├── Card.tsx              # Reusable card component
+│   ├── ThemedText.tsx        # Themed text component
+│   ├── ThemedView.tsx        # Themed view component
+│   └── ErrorBoundary.tsx     # Error boundary wrapper
 ├── screens/
-│   ├── DashboardScreen.tsx # Main dashboard
-│   └── SettingsScreen.tsx  # Settings screen
+│   ├── DashboardScreen.tsx   # Main dashboard
+│   └── SettingsScreen.tsx    # Settings screen
 ├── navigation/
 │   ├── RootStackNavigator.tsx
 │   ├── MainTabNavigator.tsx
 │   ├── HomeStackNavigator.tsx
 │   └── ProfileStackNavigator.tsx
 ├── constants/
-│   └── theme.ts            # Design tokens (colors, spacing, typography)
+│   └── theme.ts              # Design tokens (colors, spacing, typography)
 └── hooks/
     ├── useTheme.ts
     ├── useColorScheme.ts
@@ -124,15 +133,18 @@ npm run server:dev # Start Express only
 ```
 
 ## Recent Changes
-- 2024-12: Initial MVP with Korean UI
-- Dashboard with period filtering
-- Revenue display with animated transitions
-- Circular progress for goal tracking
-- Settings screen with configuration options
+- 2025-12: Full database integration with PostgreSQL
+- Real-time data updates using React Query
+- Current period badge with calendar icon
+- Floating action button for quick income entry
+- Add income modal with confetti celebration animation
+- Transaction list with delete/undo functionality
+- Goal setting modal for monthly targets
+- Proper rgba color formatting for React Native compatibility
 
 ## Next Phase Features (Planned)
 1. Animated transitions when switching periods
 2. Line/bar charts for historical trends
-3. Goal setting interface
+3. Expense entry modal
 4. Period comparison view
-5. Backend persistence with database
+5. Data export functionality
